@@ -1,0 +1,8 @@
+ofxGeometry
+-----------
+Very very experimental geometry operations
+addon for openFrameworks. Goals are to apply
+operations such as smoothing, joining, splitting,
+extruding, etc.. Basically a 3D modeller in code.
+
+
