@@ -10,6 +10,7 @@ public:
 	void createSphere(guint level);
 	vector<GtsVertex*> getVertices();
 	vector<GtsEdge*> getEdges();
+	vector<GtsTriangle*> getTriangles();
 private:
 	GtsSurface* s;
 	
