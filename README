@@ -5,4 +5,14 @@ addon for openFrameworks. Goals are to apply
 operations such as smoothing, joining, splitting,
 extruding, etc.. Basically a 3D modeller in code.
 
+INSTALL (tested in Xcode 4)
+===========================
+1. clone this addon to your addons directory
+2. create a new OF application (i.e. use a template or copy the empty example)
+3. create a new group: ofxGeometry
+4. add search path: ../../../addons/ofxGeometry/include/
+5. add the static libs from the ofxGeometry/libs/ directory
 
+EXAMPLE
+=======
+The example contains a rough example I used to test.
