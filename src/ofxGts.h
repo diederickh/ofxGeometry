@@ -12,6 +12,9 @@
   Triangle - a triangle defined by three Edges
   Face - a Triangle that may be used to define a face on a Surface
   Surface - a surface composed of Faces
+
+some nice info:
+http://pygts.svn.sourceforge.net/viewvc/pygts/doc/gts.html
 */
 
 

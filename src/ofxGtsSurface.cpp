@@ -21,10 +21,64 @@ ofxGtsSurface::ofxGtsSurface() {
 	);
 }
 
+ofxGtsSurface::~ofxGtsSurface() {
+	{
+		vector<GtsVertex*>::iterator it = vertices.begin();
+		while(it != vertices.end()) {
+			delete *it;
+			++it;
+		}
+	}
+	{
+		vector<GtsEdge*>::iterator it = edges.begin();
+		while(it != edges.end()) {
+			delete *it;
+			++it;
+		}
+	}
+	{
+		vector<GtsFace*>::iterator it = faces.begin();
+		while(it != faces.end()) {
+			delete *it;
+			++it;
+		}
+	}
+}
+
 // level:  http://mathworld.wolfram.com/GeodesicDome.html
 void ofxGtsSurface::createSphere(guint level) {
 	gts_surface_generate_sphere(s, level);
-	//gts_surface_write (s, stdout);
+}
+
+GtsVertex* ofxGtsSurface::createVertex(float x, float y, float z) {
+	GtsVertex* v = gts_vertex_new(s->vertex_class, x, y, z);
+	vertices.push_back(v);
+	return v;
+}
+
+GtsEdge* ofxGtsSurface::createEdge(GtsVertex* v1, GtsVertex* v2) {
+	GtsEdge* edge = gts_edge_new(s->edge_class, v1, v2);
+	edges.push_back(edge);
+	return edge;
+}
+
+GtsFace* ofxGtsSurface::createFace(GtsEdge* e1, GtsEdge* e2, GtsEdge* e3) {
+	GtsFace* face = gts_face_new(s->face_class, e1, e2, e3);
+	faces.push_back(face);
+	return face;
+}
+
+vector<GtsVertex*> ofxGtsSurface::getFaceVertices(GtsFace* face) {
+	// THIS IS NOT CORRECT!!!!
+	cout << "GETFACEVERTICES IS NOT YET READY!!! " << endl;
+	GtsVertex* v1 = face->triangle.e1->segment.v1;
+	GtsVertex* v2 = face->triangle.e2->segment.v2;
+	GtsVertex* v3 = face->triangle.e3->segment.v1;
+	vector<GtsVertex*> result;
+	result.push_back(v1);
+	result.push_back(v2);
+	result.push_back(v3);
+	return result;
 }
 
 vector<GtsVertex*> ofxGtsSurface::getVertices() {
