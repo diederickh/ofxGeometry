@@ -24,7 +24,9 @@ class ofxGts {
 public:
 	ofxGts();
 	~ofxGts();
-	ofxGtsSurface& createSurface();
+	ofxGtsSurface* createSurface();
+	ofxGtsSurface* createSphere(guint level = 4);
+	
 private:
 	vector<ofxGtsSurface*> surfaces;
 };

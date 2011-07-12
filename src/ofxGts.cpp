@@ -1,4 +1,5 @@
 #include "ofxGts.h"
+
 ofxGts::ofxGts() {
 }
 
@@ -11,8 +12,14 @@ ofxGts::~ofxGts() {
 	}
 }
 
-ofxGtsSurface& ofxGts::createSurface() {
+ofxGtsSurface* ofxGts::createSurface() {
 	ofxGtsSurface* s = new ofxGtsSurface();
 	surfaces.push_back(s);
-	return *s;
+	return s;
+}
+
+ofxGtsSurface* ofxGts::createSphere(guint detail) {
+	ofxGtsSurface* s = createSurface();
+	s->createSphere(detail);
+	return s;
 }
