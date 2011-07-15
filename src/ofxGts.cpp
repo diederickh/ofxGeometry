@@ -23,3 +23,10 @@ ofxGtsSurface* ofxGts::createSphere(guint detail) {
 	s->createSphere(detail);
 	return s;
 }
+
+ofxGtsIsoSurface* ofxGts::createIsoSurface(int w, int h) {
+	ofxGtsSurface* surf = createSurface();
+	ofxGtsIsoSurface* iso = new ofxGtsIsoSurface(surf, w, h);
+	iso_surfaces.push_back(iso);
+	return iso;
+}

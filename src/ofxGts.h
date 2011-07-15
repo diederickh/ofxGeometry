@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "ofxGtsSurface.h"
+#include "ofxGtsIsoSurface.h"
 
 /*
   Point - a point in 3D space
@@ -25,8 +26,10 @@ public:
 	ofxGts();
 	~ofxGts();
 	ofxGtsSurface* createSurface();
+	ofxGtsIsoSurface* createIsoSurface(int w, int h);
 	ofxGtsSurface* createSphere(guint level = 4);
-	
+
 private:
 	vector<ofxGtsSurface*> surfaces;
+	vector<ofxGtsIsoSurface*> iso_surfaces;
 };

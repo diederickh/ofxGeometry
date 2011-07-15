@@ -1,7 +1,11 @@
 #pragma once
-#include <Gts/gts.h>
+#include <gts.h>
 #include <vector>
 #include "ofMain.h"
+
+struct FloatArray {
+	float* data;
+};
 
 using namespace std;
 class ofxGtsSurface {
@@ -12,10 +16,16 @@ public:
 	GtsEdge* 		createEdge(GtsVertex* v1, GtsVertex* v2);
 	GtsFace* 		createFace(GtsEdge* e1, GtsEdge* e2, GtsEdge* e3);
 	void 			createSphere(guint level);
+	void			createLayers(int w, int h);
+
 	
 	template<typename T>
-	inline void fillVertexData(T& vd);
+	void fillVertexData(T& vd);
 	
+	template<typename T>
+	void updateVertexData(T& vd);
+	
+	GtsSurface*				getGtsSurface();
 	vector<GtsVertex*>		getFaceVertices(GtsFace* face);
 	vector<GtsVertex*> 		getVertices();
 	vector<GtsEdge*> 		getEdges();
@@ -42,25 +52,46 @@ inline	void ofxGtsSurface::fillVertexData(T& vd) {
 	
 	// triangles
 	{
+		GtsVertex* a = NULL;
+		GtsVertex* b = NULL;
+		GtsVertex* c = NULL;
+			
 		vector<GtsTriangle*> tmp_triangles = getTriangles();
 		vector<GtsTriangle*>::iterator it = tmp_triangles.begin();
 		while(it != tmp_triangles.end()) {
 			GtsTriangle* tri = *it;
-			GtsPoint& p1 = tri->e1->segment.v1->p;
-		    GtsPoint& p2 = tri->e2->segment.v1->p;
-		    GtsPoint& p3 = tri->e3->segment.v1->p;
-			vd.addVertex(p1.x, p1.y, p1.z);
-			vd.addVertex(p2.x, p2.y, p2.z);
-			vd.addVertex(p3.x, p3.y, p3.z);
 			
-			/*
-			   GtsTriangle *triangle = (GtsTriangle*)triList->data;
-		      GtsPoint &p1 = triangle->e1->segment.v1->p;
-		      GtsPoint &p2 = triangle->e2->segment.v1->p;
-		      GtsPoint &p3 = triangle->e3->segment.v1->p;
-			*/
-			//vd.addVertex(v->p.x, v->p.y, v->p.z);
+			gts_triangle_vertices(tri, &a, &b, &c);
+			vd.addVertex(a->p.x, a->p.y, a->p.z);
+			vd.addVertex(b->p.x, b->p.y, b->p.z);
+			vd.addVertex(c->p.x, c->p.y, c->p.z);
 			++it;
 		}	
 	}
+}
+
+template<typename T>
+inline void ofxGtsSurface::updateVertexData(T& vd) {
+	vd.clear();
+	
+	GtsVertex* a = NULL;
+	GtsVertex* b = NULL;
+	GtsVertex* c = NULL;
+			
+	vector<GtsTriangle*> tmp_triangles = getTriangles();
+	vector<GtsTriangle*>::iterator it = tmp_triangles.begin();
+	while(it != tmp_triangles.end()) {
+		GtsTriangle* tri = *it;
+			
+		gts_triangle_vertices(tri, &a, &b, &c);
+		vd.addVertex(a->p.x, a->p.y, a->p.z);
+		vd.addVertex(b->p.x, b->p.y, b->p.z);
+		vd.addVertex(c->p.x, c->p.y, c->p.z);
+		++it;
+	}	
+
+}
+
+inline GtsSurface* ofxGtsSurface::getGtsSurface() {
+	return surface;
 }
