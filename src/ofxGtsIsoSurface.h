@@ -16,6 +16,7 @@ public:
 
 	int		getWidth();
 	int		getHeight();
+	void	clear();
 	
 	template<typename T> 
 	void	fillVertexData(T& vd);

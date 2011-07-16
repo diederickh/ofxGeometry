@@ -21,8 +21,13 @@ ofxGtsIsoSurface::ofxGtsIsoSurface(ofxGtsSurface* surf, int w, int h)
 {
 	grid.nx = w;
 	grid.ny = h;
-	grid.dx = grid.dy = grid.dz = 0.2;
+	grid.dx = grid.dy = grid.dz = 0.03;
 	size = (w*h) * sizeof(float);
+}
+
+
+void ofxGtsIsoSurface::clear() {	
+	layers.clear();
 }
 
 void ofxGtsIsoSurface::addLayer(float* data) {
@@ -35,5 +40,8 @@ void ofxGtsIsoSurface::addLayer(float* data) {
 
 // iso: iso surface value
 void ofxGtsIsoSurface::createIsoSurface(float iso) {
-	gts_isosurface_tetra(ofx_surface->getGtsSurface(), grid, iso_layers, this, iso);
+//	gts_isosurface_tetra(ofx_surface->getGtsSurface(), grid, iso_layers, this, iso);
+	gts_isosurface_cartesian(ofx_surface->getGtsSurface(), grid, iso_layers, this, iso);
+//	gts_isosurface_tetra_bcl(ofx_surface->getGtsSurface(), grid, iso_layers, this, iso);
+	
 }
